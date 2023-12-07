@@ -21,7 +21,7 @@ public class DentistController {
     /*
     * Get dentist by username without exposing password using DTO
     * */
-    @PostMapping(
+    @GetMapping(
             path = "/getByUsername",
             consumes = MediaType.TEXT_PLAIN_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
