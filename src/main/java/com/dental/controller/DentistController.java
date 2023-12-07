@@ -38,7 +38,17 @@ public class DentistController {
         }
     }
 
-
+    /*
+     * {
+            "username": "newDentist",
+            "passwordhash": "hashedPassword",
+            "firstname": "New",
+            "lastname": "Dentist",
+            "email": "new.dentist@example.com",
+            "phone": "1234567890",
+            "specialization": "General Dentist"
+        }
+    * */
     @PostMapping(
             value = "/add",
             consumes = MediaType.APPLICATION_JSON_VALUE,

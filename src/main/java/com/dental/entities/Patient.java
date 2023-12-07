@@ -1,9 +1,6 @@
 package com.dental.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
@@ -11,6 +8,7 @@ import java.util.UUID;
 @Table(name = "patients", schema = "public")
 public class Patient {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "patientid", nullable = false)
     private UUID id;
 
