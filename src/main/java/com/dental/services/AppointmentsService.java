@@ -9,6 +9,9 @@ import com.dental.entities.Dentist;
 import com.dental.entities.Patient;
 import com.dental.entities.Services;
 import com.dental.repositories.AppointmentRepository;
+import com.dental.repositories.DentistRepository;
+import com.dental.repositories.PatientRepository;
+import com.dental.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +21,17 @@ import java.util.UUID;
 public class AppointmentsService {
 
     private final AppointmentRepository appointmentRepository;
+    private final PatientRepository patientRepository;
+    private final DentistRepository dentistRepository;
+    private final ServiceRepository serviceRepository;
 
     @Autowired
-    public AppointmentsService(AppointmentRepository appointmentRepository) {
+    public AppointmentsService(AppointmentRepository appointmentRepository, PatientRepository patientRepository,
+                               DentistRepository dentistRepository, ServiceRepository serviceRepository) {
         this.appointmentRepository = appointmentRepository;
+        this.patientRepository = patientRepository;
+        this.dentistRepository = dentistRepository;
+        this.serviceRepository = serviceRepository;
     }
 
     public AppointmentDTO addAppointment(AppointmentDTO appointmentDTO) {
@@ -87,54 +97,24 @@ public class AppointmentsService {
 
     private Appointment convertToEntity(AppointmentDTO appointmentDTO) {
         Appointment appointment = new Appointment();
-        appointment.setId(appointmentDTO.getId());
+
         // You might need to adjust this conversion based on your entity structure
-        appointment.setPatientid(convertPatientDTOToEntity(appointmentDTO.getPatientid()));
-        appointment.setDentistid(convertDentistDTOToEntity(appointmentDTO.getDentistid()));
+        Patient patient = patientRepository.findById(appointmentDTO.getPatientid().getId()).orElse(null);
+        appointment.setPatientid(patient);
+
+        Dentist dentist = dentistRepository.findById(appointmentDTO.getDentistid().getId()).orElse(null);
+        appointment.setDentistid(dentist);
 
         appointment.setAppointmentdatetime(appointmentDTO.getAppointmentdatetime());
         appointment.setStatus(appointmentDTO.getStatus());
         appointment.setNotes(appointmentDTO.getNotes());
+
         // You might need to adjust this conversion based on your entity structure
-        appointment.setServiceid(convertServiceDTOToEntity(appointmentDTO.getServiceid()));
+        Services service = serviceRepository.findById(appointmentDTO.getServiceid().getId()).orElse(null);
+        appointment.setServiceid(service);
+
         return appointment;
     }
 
-    private Services convertServiceDTOToEntity(ServiceDTO serviceDTO) {
-        Services service = new Services();
-        service.setServicename(serviceDTO.getServicename());
-        service.setDescription(serviceDTO.getDescription());
-        service.setDuration(serviceDTO.getDuration());
-        service.setCost(serviceDTO.getCost());
-        return service;
-    }
-
-    private Dentist convertDentistDTOToEntity(DentistDTO dentistDTO) {
-        Dentist dentist = new Dentist();
-        dentist.setUsername(dentistDTO.getUsername());
-        dentist.setPasswordhash(dentistDTO.getPasswordhash());
-        dentist.setFirstname(dentistDTO.getFirstname());
-        dentist.setLastname(dentistDTO.getLastname());
-        dentist.setEmail(dentistDTO.getEmail());
-        dentist.setPhone(dentistDTO.getPhone());
-        dentist.setSpecialization(dentistDTO.getSpecialization());
-        return dentist;
-    }
-
-    private Patient convertPatientDTOToEntity(PatientDTO patientDTO) {
-        Patient patient = new Patient();
-        patient.setUsername(patientDTO.getUsername());
-        patient.setPasswordhash(patientDTO.getPasswordhash());
-        patient.setFirstname(patientDTO.getFirstname());
-        patient.setLastname(patientDTO.getLastname());
-        patient.setEmail(patientDTO.getEmail());
-        patient.setPhone(patientDTO.getPhone());
-        return patient;
-    }
-
-    // Methods to convert PatientDTO, DentistDTO, and ServiceDTO to/from entities
-    // ...
-
-    // You need to implement the conversion methods based on your entity and DTO structures
 }
 

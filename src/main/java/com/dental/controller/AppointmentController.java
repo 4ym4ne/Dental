@@ -2,6 +2,9 @@ package com.dental.controller;
 
 import com.dental.DTO.AppointmentDTO;
 import com.dental.services.AppointmentsService;
+import com.dental.services.DentistService;
+import com.dental.services.PatientService;
+import com.dental.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,6 +41,7 @@ public class AppointmentController {
 
     // Update an existing appointment or add a new appointment if ID is not provided
     @PutMapping(
+            path = "/update",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
