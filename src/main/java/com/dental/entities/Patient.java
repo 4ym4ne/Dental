@@ -1,5 +1,6 @@
 package com.dental.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -15,6 +16,7 @@ public class Patient {
     @Column(name = "username", length = 50)
     private String username;
 
+    @JsonIgnore
     @Column(name = "passwordhash", length = 64)
     private String passwordhash;
 
