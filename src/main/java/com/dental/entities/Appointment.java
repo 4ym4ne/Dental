@@ -13,11 +13,11 @@ public class Appointment {
     @Column(name = "appointmentid", nullable = false)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patientid")
     private Patient patientid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dentistid")
     private Dentist dentistid;
 
@@ -30,7 +30,7 @@ public class Appointment {
     @Column(name = "notes", length = Integer.MAX_VALUE)
     private String notes;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "serviceid")
     private Services serviceid;
 
