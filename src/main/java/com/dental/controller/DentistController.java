@@ -22,12 +22,11 @@ public class DentistController {
     * Get dentist by username without exposing password using DTO
     * */
     @GetMapping(
-            path = "/getByUsername",
-            consumes = MediaType.TEXT_PLAIN_VALUE,
+            path = "/getByUsername/{username}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<DentistDTO> getDentistByUsername(@RequestBody String username) {
+    public ResponseEntity<DentistDTO> getDentistByUsername(@PathVariable String username) {
         DentistDTO dentist = dentistService.getDentistDTOByUsername(username);
 
         if (dentist != null) {

@@ -5,11 +5,7 @@ import com.dental.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/patients")
@@ -39,12 +35,11 @@ public class PatientController {
 
     // get patient by username without exposing password using DTO
     @PostMapping(
-            path = "/getByUsername",
-            consumes = MediaType.TEXT_PLAIN_VALUE,
+            path = "/getByUsername/{username}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<PatientDTO> getPatientByUsername(@RequestBody String username) {
+    public ResponseEntity<PatientDTO> getPatientByUsername(@PathVariable String username) {
         PatientDTO patient = patientService.getPatientDTOByUsername(username);
         if (patient != null) {
             System.out.println(patient.getUsername());

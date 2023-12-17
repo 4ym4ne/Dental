@@ -55,7 +55,10 @@ public class AppointmentController {
     }
 
     // Get an appointment by ID
-    @GetMapping(value = "/{appointmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(
+            value = "/{appointmentId}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public ResponseEntity<AppointmentDTO> getAppointment(@PathVariable UUID appointmentId) {
         AppointmentDTO appointment = appointmentService.getAppointment(appointmentId);
         if (appointment != null) {
