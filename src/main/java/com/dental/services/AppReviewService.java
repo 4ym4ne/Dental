@@ -28,7 +28,9 @@ public class AppReviewService {
     public AppReview addReview(UUID appointmentId, String content) {
         // Assuming you have a method to find an appointment by ID in the appointmentRepository
         Appointment appointment = appointmentRepository.findById(appointmentId).orElse(null);
-
+        if(appointment == null) {
+            return null;
+        }
         // Create a new review
         AppReview review = new AppReview();
         review.setAppointments(appointment);
