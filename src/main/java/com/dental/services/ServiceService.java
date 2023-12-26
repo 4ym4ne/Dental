@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +32,16 @@ public class ServiceService {
         Services newService = convertToEntity(serviceDTO);
         Services savedService = servicesRepository.save(newService);
         return convertToDTO(savedService);
+    }
+
+    public boolean deleteServiceById(UUID serviceId) {
+        try {
+            servicesRepository.deleteById(serviceId);
+            return true; // Successfully deleted
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Error occurred while deleting
+        }
     }
 
     private ServiceDTO convertToDTO(Services service) {

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/services")
@@ -44,5 +45,20 @@ public class ServicesController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteService(@RequestBody ServiceDTO serviceDTO) {
+        UUID serviceId = serviceDTO.getId();
+        if (serviceId != null) {
+            boolean deleted = serviceService.deleteServiceById(serviceId);
+            if (deleted) {
+                String successMessage = "Service with ID: " + serviceId + " was deleted.";
+                return ResponseEntity.ok(successMessage);
+            }
+        }
+        String errorMessage = "Error deleting service with ID: " + serviceId;
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(errorMessage);
     }
 }
